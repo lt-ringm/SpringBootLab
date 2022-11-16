@@ -11,9 +11,9 @@ public class GrattaEVinci {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id; // Identifier
 
-    private Integer number;
+    private Integer number; // Ticket number
 
-    private Boolean is_winner;
+    private Boolean is_winner; // Whether it's a winning or losing ticket
 
     public Integer getId() {
         return id;
