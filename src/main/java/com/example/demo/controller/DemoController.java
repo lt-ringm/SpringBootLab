@@ -1,63 +1,25 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.GrattaEVinci;
-import com.example.demo.repo.DemoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-@RestController
+@Controller
 public class DemoController {
 
-    @Autowired
-    DemoRepository demoRepository;
+    @Value("${spring.application.name}")
+    String appName;
 
-    // HOME
-    @GetMapping("/")
-    public String index() {
-        return "Greetings !\n /all - list all database entries\n /check - check if you have won!";
+    // HOME PAGE
+    @RequestMapping("/")
+    public String index(Model model) {
+        model.addAttribute("appName", appName);
+        return "home";
     }
 
-    /*
-    Lists the information on all the tickets in the database
-
-    @return: list of info on the tickets
-     */
-    @GetMapping("/all")
-    public List<GrattaEVinci> getAll(){
-        return demoRepository.findAll();
-    }
-
-    /*
-    Checks whether it's a winning or losing ticket
-
-    @param num: number of the ticket
-
-    @return: a simple string containing the result of the check
-     */
-    @GetMapping("/check")
-    public String check(@RequestParam(value = "num", defaultValue = "-1") Integer num){
-        String result = "";
-
-        if (num < 0){
-            return "To search for a ticket the number must be specified!";
-        }
-
-        List<GrattaEVinci> list = demoRepository.findByNumber(num);
-
-        if(list.isEmpty()){
-            result = "Ticket num. " + num + " not found!";
-        }
-        else if(list.get(0).getIs_winner()){
-            result = "Congratulations, you have won!";
-        }
-        else{
-            result = "Unfortunately you have lost, try again!";
-        }
-
-        return result;
+    @RequestMapping("/check")
+    public String check(Model model){
+        return "check";
     }
 }
