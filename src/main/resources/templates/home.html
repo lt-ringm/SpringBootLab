@@ -6,38 +6,30 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{css/home.css}">
 
         <title>Home Page</title>
-
-        <style>
-            .titlebox{
-                height: 200px;
-            }
-
-            hr {
-                width: 90%;
-            }
-        </style>
     </head>
+
     <body>
+        <div class="bg"></div>
+        <div class="bg bg2"></div>
+        <div class="bg bg3"></div>
 
         <div class="container">
 
-            <div class="row titlebox align-items-center">
+            <div class="row titlebox align-items-center content">
                 <div class="col"></div>
                 <div class="col-md-auto">
-                    <h1 class="align-middle">Welcome to <span th:text="${appName}">Our App</span></h1>
-                </div>
-                <div class="col"></div>
-            </div>
-
-            <div class="row align-items-center">
-                <div class="col"></div>
-                <div class="col-md-auto">
-                    <h6>A demo web application created by using the
-                        <a href="https://spring.io/projects/spring-boot">Spring Boot</a>
-                        <img src="./../imgs/spring-3-logo-png-transparent.png" alt="" style="width:10px; height:10px;"> framework
-                    </h6>
+                    <div class="row">
+                        <h1 class="align-middle">Welcome to <span th:text="${appName}">Our App</span></h1>
+                    </div>
+                    <div class="row">
+                        <h6 style="margin-top:20px;">A demo web application created by using the
+                            <a href="https://spring.io/projects/spring-boot">Spring Boot</a>
+                            <img th:src="@{images/spring-3-logo-png-transparent.png}" alt="logo" style="width:20px; height:20px;"> framework
+                        </h6>
+                    </div>
                 </div>
                 <div class="col"></div>
             </div>
@@ -45,17 +37,24 @@
             <hr>
 
             <div class="row justify-content-center">
-                <ul class="nav justify-content-center">
+                <ul class="nav justify-content-center content">
                     <li class="nav-item">
                         <a class="nav-link active" href="/all">View all</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/check">Check ticket</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help">Help</a>
+                    </li>
                 </ul>
             </div>
 
         </div>
+
+        <!-- Vue.js -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

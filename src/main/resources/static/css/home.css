@@ -1,0 +1,68 @@
+h1, h6, p {
+    color: #344e41;
+}
+
+h1{
+    font-weight: bold;
+}
+
+hr {
+    width: 90%;
+}
+
+a {
+    color: #f9414b;
+}
+
+a:hover, a:active {
+    color: #7d2126;
+}
+
+/*
+------------------------------------------------------------------------------------------------------------------------
+CLASSES
+------------------------------------------------------------------------------------------------------------------------
+*/
+.titlebox{
+    height: 200px;
+}
+
+.bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #bbde8f 50%, #5f9619 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+}
+
+.bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+}
+
+.bg3 {
+    animation-duration:5s;
+}
+
+.content {
+  background-color:rgba(255,255,255,.9);
+  border-radius:10px;
+  margin: 10px 10px 10px 10px;
+}
+/*
+------------------------------------------------------------------------------------------------------------------------
+ANIMATIONS
+------------------------------------------------------------------------------------------------------------------------
+*/
+@keyframes slide {
+    0% {
+        transform:translateX(-25%);
+    }
+    100% {
+        transform:translateX(25%);
+    }
+}
