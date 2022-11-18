@@ -1,15 +1,15 @@
 package com.example.demo.repo;
 
-import com.example.demo.entity.GrattaEVinci;
+import com.example.demo.entity.ScratchAndWin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface DemoRepository extends JpaRepository<GrattaEVinci, Integer> {
+public interface DemoRepository extends JpaRepository<ScratchAndWin, Integer> {
 
-    List<GrattaEVinci> findAll();
-    List<GrattaEVinci> findByNumber(Integer number);
+    List<ScratchAndWin> findAll();
+    List<ScratchAndWin> findByNumber(Integer number);
 
 }

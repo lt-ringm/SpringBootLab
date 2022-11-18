@@ -4,14 +4,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "grattaevinci")
-public class GrattaEVinci {
+public class ScratchAndWin {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // Identifier
 
-    private Integer number; // Ticket number
+    private Integer number; // Scratch&win number
 
-    private Boolean is_winner; // Whether it's a winning or losing ticket
+    private Boolean is_winner; // Whether it's a winning or losing scratch&win
 
     public Integer getId() {
         return id;
