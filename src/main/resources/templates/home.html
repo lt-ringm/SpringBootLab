@@ -18,43 +18,130 @@
 
         <div class="container">
 
-            <div class="row titlebox align-items-center content">
+            <div class="row titlebox align-items-center header">
                 <div class="col"></div>
                 <div class="col-md-auto">
                     <div class="row">
                         <h1 class="align-middle">Welcome to <span th:text="${appName}">Our App</span></h1>
                     </div>
                     <div class="row">
-                        <h6 style="margin-top:20px;">A demo web application created by using the
+                        <h6 style="margin-top:20px;">A demo web application created with the
                             <a href="https://spring.io/projects/spring-boot">Spring Boot</a>
                             <img th:src="@{images/spring-3-logo-png-transparent.png}" alt="logo" style="width:20px; height:20px;"> framework
                         </h6>
                     </div>
+
                 </div>
                 <div class="col"></div>
             </div>
 
             <hr>
 
-            <div class="row justify-content-center">
-                <ul class="nav justify-content-center content">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/all">View all</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/check">Check ticket</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/help">Help</a>
+            <div id="vueapp">
+                <ul>
+                    <li style="list-style-type:none" v-for="info in cards">
+                        <info-card
+                                v-bind:info="info" v-bind:key="info.id">
+                        </info-card>
                     </li>
                 </ul>
+            </div>
+
+            <div class="card">
+                <div class="row">
+                    <div class="col">
+                        <h3>View all tickets</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Access to the full list of tickets registered in out system.</p>
+                    </div>
+                    <div class="col text-right">
+                        <a href="/all"><img class="next" th:src="@{images/cerchio-destro.png}" alt="next"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row">
+                    <div class="col">
+                        <h3>Find out if you have <span>won</span>!</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Check whether the ticket yout have bought it's a winning ticket! All you need is the barcode written on it's back.</p>
+                    </div>
+                    <div class="col text-right">
+                        <a href="/check"><img class="next" th:src="@{images/cerchio-destro.png}" alt="next"></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col">
+                        <h3>About us</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p>This is a simple web application created with the aim of learning the Spring Boot framework.
+                            It is based on the idea of a system that allows the user who bought a ticket to <b>check whether
+                                he/she has won or lost</b>. Each ticket it's identified by a numeric code of max 14 digits.
+                        </p>
+                    </div>
+                </div>
             </div>
 
         </div>
 
         <!-- Vue.js -->
-        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+        <script type="text/babel">
+            Vue.component('info-card', {
+                props: ['info'],
+                template: `<div class="card">
+                                <div class="row">
+                                    <div class="col">
+                                        <h3>{{info.title}}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <p v-html="info.description">{{info.description}}</p>
+                                    </div>
+                                    <div class="col text-right">
+                                        <a href="/all"><img class="next" th:src="@{images/cerchio-destro.png}" alt="next"></a>
+                                    </div>
+                                </div>
+                            </div>`
+            });
+
+            var app = new Vue({
+                el: '#vueapp',
+                data: {
+                    cards: [
+                        {
+                            id: "1",
+                            title: "View all tickets",
+                            description: "Access to the full list of tickets registered in out system."
+                        },
+                        {
+                            id: "2",
+                            title: "Find out if you have <span>won</span>!",
+                            description: "Check whether the ticket yout have bought it's a winning ticket! All you need is the barcode written on it's back."
+                        }
+                    ]
+                }
+            });
+        </script>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

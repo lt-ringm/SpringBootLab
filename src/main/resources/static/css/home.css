@@ -1,21 +1,39 @@
-h1, h6, p {
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+h1, h3, h6, p {
     color: #344e41;
 }
 
-h1{
+h1, h3{
     font-weight: bold;
 }
 
 hr {
-    width: 90%;
+    color: #344e41;
+    background-color: #344e41;
+    width: 60%;
+    height: 1px;
 }
 
-a {
+a, span {
     color: #f9414b;
 }
 
 a:hover, a:active {
     color: #7d2126;
+}
+
+a img{
+    width: 60px;
+    height: 60px;
+    transition: 0.5s;
+}
+
+a:hover img{
+    transform: scale(1.25);
 }
 
 /*
@@ -48,11 +66,29 @@ CLASSES
     animation-duration:5s;
 }
 
-.content {
-  background-color:rgba(255,255,255,.9);
-  border-radius:10px;
-  margin: 10px 10px 10px 10px;
+.header {
+    background-color: rgba(255,255,255,.9);
+    border-radius: 20px 20px 0px 0px;
+    margin: 10px 0px 10px 0px;
 }
+
+.footer {
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(255,255,255,.9);
+    border-radius: 0px 0px 20px 20px;
+    margin: 20px 0px 10px 0px;
+}
+
+.card {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(255,255,255,.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
 /*
 ------------------------------------------------------------------------------------------------------------------------
 ANIMATIONS
