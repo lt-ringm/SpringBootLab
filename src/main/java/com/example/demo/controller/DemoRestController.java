@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.entity.ScratchAndWin;
 import com.example.demo.repo.DemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,37 +23,35 @@ public class DemoRestController {
     @Autowired
     DemoRepository demoRepository;
 
-
     /*
     Retrieves the info on a scratch&win by id
 
     @param id: identifier
 
-    @return: scratch&win
+    @return: scratch&win info if it exists or else error
      */
-    @GetMapping("/rest")
-    public ScratchAndWin getById(@RequestParam Integer id){
-        return demoRepository.findById(id).get();
-    }
+    @GetMapping("/rest/{id}")
+    public ResponseEntity<ScratchAndWin> get(@PathVariable("id") Integer id){
 
-    /*
-    Retrieves the info on a scratch&win by number
+        ResponseEntity<ScratchAndWin> res;
 
-    @param num: number
+        // Check if the scratch and win exists
+        if (demoRepository.findById(id).isPresent()){
+            res = new ResponseEntity<>(demoRepository.findById(id).get(), HttpStatus.OK);
+        }
+        else{
+            res = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-    @return: scratch&win
-     */
-    @GetMapping("/rest/num")
-    public ScratchAndWin getByNum(@RequestParam Integer num){
-        return demoRepository.findByNumber(num).get(0);
+        return res;
     }
 
     /*
     Lists the information on all the scratch&win in the database
 
-    @return: list of info on the scratch&win
+    @return: list of info on all the scratch&win
      */
-    @GetMapping("/rest/all")
+    @GetMapping("/rest")
     public List<ScratchAndWin> getAll(){
         return demoRepository.findAll();
     }
@@ -63,8 +65,18 @@ public class DemoRestController {
      */
 
     @PostMapping("/rest")
-    public ScratchAndWin add(@RequestBody ScratchAndWin scratchAndWin){
-            return demoRepository.save(scratchAndWin);
+    public ResponseEntity<ScratchAndWin> add(@RequestBody ScratchAndWin scratchAndWin){
+
+        ResponseEntity<ScratchAndWin> res;
+
+        try{
+            res = new ResponseEntity<>(demoRepository.save(scratchAndWin), HttpStatus.OK);
+        }
+        catch (TransactionSystemException | DataIntegrityViolationException e){
+            res = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return res;
     }
 
     /*
@@ -75,18 +87,34 @@ public class DemoRestController {
 
     @return: scratch&win
      */
-    @PutMapping("/rest")
-    ScratchAndWin update(@RequestBody ScratchAndWin scratchAndWin, @RequestParam Integer id) {
+    @PutMapping("/rest/{id}")
+    public ResponseEntity<ScratchAndWin> update(@RequestBody ScratchAndWin scratchAndWin, @PathVariable("id") Integer id) {
 
-        return demoRepository.findById(id).map(gev -> {
-            gev.setNumber(scratchAndWin.getNumber());
-            gev.setIs_winner(scratchAndWin.getIs_winner());
-            return demoRepository.save(gev);
+        ResponseEntity<ScratchAndWin> res;
+
+        res = demoRepository.findById(id).map(gev -> {
+            gev.setNum1(scratchAndWin.getNum1());
+            gev.setNum2(scratchAndWin.getNum2());
+            gev.setNum3(scratchAndWin.getNum3());
+            gev.setNum4(scratchAndWin.getNum4());
+            gev.setWinner(scratchAndWin.getWinner());
+            gev.setPrize(scratchAndWin.getPrize());
+            gev.setBought(scratchAndWin.isBought());
+            return new ResponseEntity<>(demoRepository.save(gev), HttpStatus.OK);
         }).orElseGet(() -> {
             scratchAndWin.setId(id);
-            return demoRepository.save(scratchAndWin);
+
+            try{
+                return new ResponseEntity<>(demoRepository.save(scratchAndWin), HttpStatus.OK);
+            }
+            catch (TransactionSystemException | DataIntegrityViolationException e){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         });
+
+        return res;
     }
+
 
     /*
     Delete a scratch&win
@@ -95,8 +123,8 @@ public class DemoRestController {
 
     @return:
      */
-    @DeleteMapping("/rest")
-    void delete(@RequestParam Integer id) {
+    @DeleteMapping("/rest/{id}")
+    public void delete(@PathVariable("id") Integer id) {
         demoRepository.deleteById(id);
     }
 
@@ -106,7 +134,7 @@ public class DemoRestController {
     @return:
      */
     @DeleteMapping("/rest/all")
-    void deleteAll(){
+    public void deleteAll(){
         demoRepository.deleteAll();
     }
 

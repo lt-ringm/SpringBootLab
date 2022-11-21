@@ -10,6 +10,5 @@ import java.util.List;
 public interface DemoRepository extends JpaRepository<ScratchAndWin, Integer> {
 
     List<ScratchAndWin> findAll();
-    List<ScratchAndWin> findByNumber(Integer number);
 
 }
