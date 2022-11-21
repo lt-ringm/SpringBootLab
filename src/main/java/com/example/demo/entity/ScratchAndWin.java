@@ -39,6 +39,17 @@ public class ScratchAndWin {
     @Column(nullable = false)
     private boolean bought; // Whether it has been bought
 
+    public ScratchAndWin(Integer id, Integer num1, Integer num2, Integer num3, Integer num4, Integer winner, double prize, boolean bought) {
+        this.id = id;
+        this.num1 = num1;
+        this.num2 = num2;
+        this.num3 = num3;
+        this.num4 = num4;
+        this.winner = winner;
+        this.prize = prize;
+        this.bought = bought;
+    }
+
     // GETTERS AND SETTERS ---------------------------------------------------------------------------------------------
 
     public Integer getId() {
